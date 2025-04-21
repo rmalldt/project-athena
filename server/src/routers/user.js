@@ -26,6 +26,14 @@ userRouter.post(
   ],
   userController.register
 );
-userRouter.post('/login', userController.login);
+
+userRouter.post(
+  '/login',
+  [
+    body('username', 'Invalid username').trim().not().isEmpty(),
+    body('password', 'Invalid password.').isLength({ min: 8 }).trim(),
+  ],
+  userController.login
+);
 
 module.exports = userRouter;

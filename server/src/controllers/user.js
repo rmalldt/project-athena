@@ -46,6 +46,13 @@ async function register(req, res) {
 async function login(req, res) {
   const { username, password } = req.body;
 
+  const validationErrors = validationResult(req);
+
+  if (!validationErrors.isEmpty()) {
+    const errors = validationErrors.errors.map(error => error.msg);
+    return res.status(422).json({ error: errors });
+  }
+
   try {
     // Check username
     let result = await User.getOneByUsername(username);
