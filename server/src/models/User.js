@@ -25,7 +25,7 @@ class User {
 
   static async getOneByUsername(username) {
     const response = await db.query(
-      'SELECT * FROM user_account WHERE username = $1',
+      'SELECT * FROM user_account WHERE LOWER(username) = LOWER($1)',
       [username]
     );
 

@@ -1,3 +1,4 @@
+const { validationResult } = require('express-validator');
 const {
   hashPassword,
   comparePassword,
@@ -8,28 +9,32 @@ const User = require('../models/User');
 
 async function register(req, res) {
   const { username, email, password } = req.body;
+
+  const validationErrors = validationResult(req);
+
+  if (!validationErrors.isEmpty()) {
+    const errors = validationErrors.errors.map(error => error.msg);
+    return res.status(422).json({ error: errors });
+  }
+
   try {
     let result = await User.getOneByEmail(email);
     if (result.data) {
       return res.status(400).json({ error: 'Email already exists' });
     }
-
     result = await User.getOneByUsername(username);
     if (result.data) {
       return res.status(400).json({ error: 'Username already exists' });
     }
-
     const hashedPass = await hashPassword(password);
     result = await User.createUser({
       username,
       email,
       password: hashedPass,
     });
-
     if (!result.data) {
       throw new Error(result.message);
     }
-
     res
       .status(201)
       .json({ success: true, data: result.data, message: 'Signup Success' });
@@ -42,8 +47,9 @@ async function login(req, res) {
   const { username, password } = req.body;
 
   try {
-    // Check email
+    // Check username
     let result = await User.getOneByUsername(username);
+    console.log('RESULT: ', result.data);
     if (!result.data) {
       throw new Error(result.message);
     }
