@@ -1,9 +1,6 @@
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
-const {
-  hashPassword,
-  comparePassword,
-  issueJwt,
-} = require('../utils/auth-util');
 
 const User = require('../models/User');
 
@@ -18,23 +15,28 @@ async function register(req, res) {
   }
 
   try {
-    let result = await User.getOneByEmail(email);
+    let result = await User.getStudentByEmail(email);
     if (result.data) {
       return res.status(400).json({ error: 'Email already exists' });
     }
-    result = await User.getOneByUsername(username);
+
+    result = await User.getStudentByUsername(username);
     if (result.data) {
       return res.status(400).json({ error: 'Username already exists' });
     }
-    const hashedPass = await hashPassword(password);
-    result = await User.createUser({
+
+    const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS));
+    const hashedPass = await bcrypt.hash(password, salt);
+    result = await User.create({
       username,
       email,
       password: hashedPass,
     });
+
     if (!result.data) {
       throw new Error(result.message);
     }
+
     res
       .status(201)
       .json({ success: true, data: result.data, message: 'Signup Success' });
@@ -55,35 +57,62 @@ async function login(req, res) {
 
   try {
     // Check username
-    let result = await User.getOneByUsername(username);
-    console.log('RESULT: ', result.data);
+    let result = await User.getStudentByUsername(username);
     if (!result.data) {
       throw new Error(result.message);
     }
 
     // Check password
-    const match = await comparePassword(password, result.data.password);
+    const match = await bcrypt.compare(password, result.data.password);
     if (!match) {
       throw new Error('User could not be authenticated');
     }
 
     // Issue token
-    const jwt = issueJwt(result.data);
 
-    res.status(200).json({
-      success: true,
-      data: {
-        token: jwt.token,
-        expiresIn: jwt.expiresIn,
-      },
-      message: 'Login Success',
-    });
+    const payload = {
+      student_id: result.data.student_id,
+      username: result.data.username,
+    };
+
+    const expiresIn = 3600;
+
+    const sendToken = (err, token) => {
+      if (err) {
+        throw new Error('Error generating token');
+      }
+      res.status(200).json({
+        success: true,
+        data: {
+          token: token,
+          expiresIn: expiresIn,
+        },
+        message: 'Login Success',
+      });
+    };
+
+    jwt.sign(
+      payload,
+      process.env.SECRET_KEY,
+      { expiresIn: expiresIn },
+      sendToken
+    );
   } catch (err) {
     res.status(401).json({ error: err.message });
   }
 }
 
+async function logout(req, res) {
+  if (!req.user) {
+    return res.status(403).json({ error: 'Not Authenticated' });
+  }
+
+  delete req.user;
+  res.status(200).json({ success: true, message: 'Logout Success' });
+}
+
 module.exports = {
   register,
   login,
+  logout,
 };
