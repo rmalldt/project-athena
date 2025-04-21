@@ -69,7 +69,6 @@ async function login(req, res) {
     }
 
     // Issue token
-
     const payload = {
       student_id: result.data.student_id,
       username: result.data.username,

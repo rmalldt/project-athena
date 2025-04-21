@@ -11,7 +11,7 @@ class User {
 
   static async getStudentById(id) {
     const response = await db.query(
-      'SELECT * FROM student WHERE student_id = $1',
+      'SELECT * FROM student WHERE student_id = $1;',
       [id]
     );
 
@@ -25,7 +25,7 @@ class User {
 
   static async getStudentByUsername(username) {
     const response = await db.query(
-      'SELECT * FROM student WHERE LOWER(username) = LOWER($1)',
+      'SELECT * FROM student WHERE LOWER(username) = LOWER($1);',
       [username]
     );
 
@@ -38,12 +38,12 @@ class User {
   }
 
   static async getStudentByEmail(email) {
-    const response = await db.query('SELECT * FROM student WHERE email = $1', [
+    const response = await db.query('SELECT * FROM student WHERE email = $1;', [
       email,
     ]);
 
     if (response.rows.length != 1) {
-      return { data: null, message: 'User not found' };
+      return { data: null, message: 'Student not found' };
     }
 
     const student = new User(response.rows[0]);
@@ -54,7 +54,7 @@ class User {
     const { username, email, password } = data;
 
     const response = await db.query(
-      'INSERT INTO student (username, email, password) VALUES ($1, $2, $3) RETURNING student_id, username',
+      'INSERT INTO student (username, email, password) VALUES ($1, $2, $3) RETURNING student_id, username;',
       [username, email, password]
     );
 
