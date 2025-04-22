@@ -1,4 +1,10 @@
-client/node_modules
-server/node_modules
-client/.env
-server/.env
+node_modules
+coverage
+.env
+.DS_Store
+.vscode
+client/dist
+client/.parcel-cache
+server/Dockerfile
+server/.dockerignore
+

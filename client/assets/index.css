@@ -1,0 +1,171 @@
+:root {
+  --color-grey-0: #fff;
+  --color-grey-50: #f9fafb;
+  --color-grey-100: #f3f4f6;
+  --color-grey-200: #e5e7eb;
+  --color-grey-300: #d1d5db;
+  --color-grey-400: #9ca3af;
+  --color-grey-500: #6b7280;
+  --color-grey-600: #4b5563;
+  --color-grey-700: #374151;
+  --color-grey-800: #1f2937;
+  --color-grey-900: #111827;
+
+  --color-blue-0: #eff6ff;
+  --color-blue-50: #dbeafe;
+  --color-blue-100: #bfdbfe;
+  --color-blue-200: #93c5fd;
+  --color-blue-300: #60a5fa;
+  --color-blue-400: #3b82f6;
+  --color-blue-500: #2563eb;
+  --color-blue-600: #1d4ed8;
+  --color-blue-700: #1e40af;
+  --color-blue-800: #1e3a8a;
+  --color-blue-900: #172554;
+
+  --backdrop-color: rgba(255, 255, 255, 0.1);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0px 0.6rem 2.4rem rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 2.4rem 3.2rem rgba(0, 0, 0, 0.12);
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100dvh;
+  font-family: sans-serif;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--color-grey-800);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-grey-50);
+}
+
+nav {
+  width: 100%;
+  height: 5rem;
+  padding: 2rem 5rem;
+  border-bottom: 1px solid transparent;
+  background-color: var(--color-blue-400);
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+main {
+  min-height: calc(100dvh - 10rem);
+  min-width: 20rem;
+  padding: 0 4rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-blue-400);
+  border-radius: 3px;
+  color: white;
+  font-size: inherit;
+  background-color: var(--color-blue-400);
+
+  &:hover {
+    cursor: pointer;
+    background-color: var(--color-blue-200);
+  }
+}
+
+footer {
+  width: 100%;
+  height: 5rem;
+  padding: 1.5rem 2rem;
+  color: white;
+  font-size: 13px;
+  background-color: var(--color-blue-800);
+}
+
+.logo img {
+  height: 5rem;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.buttons button {
+  border: none;
+  color: white;
+  font-size: inherit;
+  background-color: var(--color-blue-400);
+
+  &:hover {
+    cursor: pointer;
+    color: var(--color-blue-100);
+  }
+}
+
+.home-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-image {
+  width: 30rem;
+  aspect-ratio: 1;
+
+  & img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+  }
+}
+
+.signup-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+form {
+  width: 30%;
+  min-width: 10rem;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+}
+
+form button {
+  min-width: 8rem;
+  align-self: center;
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 1rem;
+}
+
+.form-control input {
+  min-width: 10rem;
+  height: 2rem;
+  padding: 1rem 0.5rem;
+  font-size: 1rem;
+  color: var(--color-grey-600);
+  border: 1px solid var(--color-grey-400);
+  border-radius: 3px;
+}
