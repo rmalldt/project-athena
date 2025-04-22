@@ -3,3 +3,8 @@ coverage
 .env
 .DS_Store
 .vscode
+client/dist
+client/.parcel-cache
+server/Dockerfile
+server/.dockerignore
+
