@@ -30,7 +30,7 @@ async function register(e) {
         console.log(responseData.data.token)
         const headersList = {
             "Accept":"*/*",
-            "Authorization": "Bearer "+localStorage.getItem("token")
+            "Authorization": "Bearer "+localStorage.getItem("token"),
         }
         const dashboardResponse = await fetch("http://localhost:3000/dashboard", {
             method: "GET",
