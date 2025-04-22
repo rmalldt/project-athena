@@ -73,29 +73,24 @@ async function login(req, res) {
       student_id: result.data.student_id,
       username: result.data.username,
     };
-
     const expiresIn = 3600;
 
-    const sendToken = (err, token) => {
-      if (err) {
-        throw new Error('Error generating token');
-      }
-      res.status(200).json({
-        success: true,
-        data: {
-          token: token,
-          expiresIn: expiresIn,
-        },
-        message: 'Login Success',
-      });
-    };
+    const token = jwt.sign(payload, process.env.SECRET_KEY, {
+      expiresIn: expiresIn,
+    });
 
-    jwt.sign(
-      payload,
-      process.env.SECRET_KEY,
-      { expiresIn: expiresIn },
-      sendToken
-    );
+    if (!token) {
+      throw new Error('Error generating token');
+    }
+
+    res.status(200).json({
+      success: true,
+      data: {
+        token: token,
+        expiresIn: expiresIn,
+      },
+      message: 'Login Success',
+    });
   } catch (err) {
     res.status(401).json({ error: err.message });
   }
