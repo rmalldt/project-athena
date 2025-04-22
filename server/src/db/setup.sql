@@ -10,6 +10,7 @@ CREATE TABLE student (
     PRIMARY KEY (student_id)
 );
 
+
 INSERT INTO student (username, email, password) 
 VALUES ('jim', 'jim@student.com', 'Password123-')
 
