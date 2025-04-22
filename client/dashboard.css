@@ -1,6 +1,6 @@
 .flex-container {
     display: flex;
-    flex-wrap: wrap; /* ✅ lets child elements wrap on smaller screens */
+    flex-wrap: wrap;
     gap: 2rem;
     justify-content: center;
     align-items: flex-start;
@@ -16,6 +16,15 @@
     background-color: #f9f9f9;
     border-radius: 12px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.profile img {
+    width: 150px;
+    height: 150px;
+}
+
+.profileBody {
+    text-align:left;
 }
 
 .classes {
