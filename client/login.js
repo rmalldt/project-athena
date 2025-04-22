@@ -1,4 +1,10 @@
 const loginForm = document.querySelector("#login")
+const registrationButton = document.querySelector(".register")
+
+function redirectToRegistrationPage(e) {
+    window.location.href="./registration.html"
+}
+
 
 async function register(e) {
     e.preventDefault();
@@ -38,3 +44,4 @@ async function register(e) {
 }
 
 loginForm.addEventListener("submit", register)
+registrationButton.addEventListener("click", redirectToRegistrationPage)

@@ -1,4 +1,9 @@
 const registrationForm = document.querySelector("#registration")
+const loginButton = document.querySelector(".login")
+
+function redirectToLoginPage(e) {
+    window.location.href="./login.html"
+}
 
 async function register(e) {
     e.preventDefault();
@@ -21,11 +26,10 @@ async function register(e) {
 
     const responseData = await response.json()
     console.log(responseData)
-    // fetchFruitData(e.target[0].value);
-    // e.target[0].value = "";
     if (responseData.success) {
         window.location.href="./login.html"
     }
   }
 
 registrationForm.addEventListener("submit", register)
+loginButton.addEventListener("click", redirectToLoginPage)
