@@ -14,3 +14,12 @@ CREATE TABLE student (
 INSERT INTO student (username, email, password) 
 VALUES ('jim', 'jim@student.com', 'Password123-')
 
+
+CREATE TABLE topic (
+  topic_id   INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  student_id INT NOT NULL
+    REFERENCES student(student_id)
+    ON DELETE CASCADE,
+  video_url  TEXT NOT NULL
+);
+
