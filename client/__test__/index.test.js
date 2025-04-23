@@ -21,31 +21,47 @@ describe('index.html', () => {
       expect(btn.innerHTML).toBe('Login');
     });
   
-    // it('h1 is empty when website loads', () => {
-    //   // Arrange
-    //   const h1 = document.querySelector('h1');
-  
-    //   // Assert
-    //   expect(h1).toBeTruthy;
-    //   expect(h1.innerHTML).toContain('');
-    // });
-  
-    it('redirect to register when the signup button is clicked', () => {
+    it('redirect to registration page when the signup button is clicked', () => {
       // Arrange
       const {document, window} = dom.window;
 
-      const btn = document.querySelector('.signup-content button');
       const anchor = document.querySelector(".signup-content a")
       const location = new URL(anchor.getAttribute('href'), window.location.href).href
-      console.log(location)
+      const actual = location.split('/').slice(-1).pop()
 
       // Act
-      btn.click();
-    
-    
-      expect(window.location.href).toBe(location);
+      const expected = "registration.html"
+      expect(actual).toBe(expected);
 
     });
+
+    it('redirect to index page when the athena project logo is clicked', () => {
+        // Arrange
+        const {document, window} = dom.window;
+  
+        const anchor = document.querySelector("nav a")
+        const location = new URL(anchor.getAttribute('href'), window.location.href).href
+        const actual = location.split('/').slice(-1).pop()
+  
+        // Act
+        const expected = "index.html"
+        expect(actual).toBe(expected);
+  
+      });
+
+      it('redirect to login page when the login button is clicked', () => {
+        // Arrange
+        const {document, window} = dom.window;
+  
+        const anchor = document.querySelector(".buttons a")
+        const location = new URL(anchor.getAttribute('href'), window.location.href).href
+        const actual = location.split('/').slice(-1).pop()
+  
+        // Act
+        const expected = "login.html"
+        expect(actual).toBe(expected);
+  
+      });
   
     // it('displays dark mode', () => {
     //   // Arrange
