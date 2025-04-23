@@ -1,4 +1,5 @@
 const { renderDOM } = require('./helpers');
+const path = require('path')
 
 let dom;
 let document;
@@ -29,17 +30,22 @@ describe('index.html', () => {
     //   expect(h1.innerHTML).toContain('');
     // });
   
-    // it('displays Hello there! when the btn is clicked', () => {
-    //   // Arrange
-    //   const btn = document.querySelector('button');
-    //   const h1 = document.querySelector('h1');
-  
-    //   // Act
-    //   btn.click();
-  
-    //   // Assert
-    //   expect(h1.innerHTML).toContain('Hello there!');
-    // });
+    it('redirect to register when the signup button is clicked', () => {
+      // Arrange
+      const {document, window} = dom.window;
+
+      const btn = document.querySelector('.signup-content button');
+      const anchor = document.querySelector(".signup-content a")
+      const location = new URL(anchor.getAttribute('href'), window.location.href).href
+      console.log(location)
+
+      // Act
+      btn.click();
+    
+    
+      expect(window.location.href).toBe(location);
+
+    });
   
     // it('displays dark mode', () => {
     //   // Arrange
