@@ -3,25 +3,69 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./assets/dashboard.css" />
+    <link rel="stylesheet" href="./assets/index.css" />
+    <link rel="stylesheet" href="./assets/quiz.css" />
+    <script src="./js/quiz.js" defer></script>
     <title>Document</title>
   </head>
   <body>
-    <ul class="nav-links">
-      <li><a href="./dashboard.html">Dashboard</a></li>
-      <li class="logOut"><a href="#">Log Out</a></li>
-    </ul>
-    <p>THIS IS A QUIZ</p>
-    <iframe
-      width="560"
-      height="315"
-      src="https://www.youtube.com/embed/quIjo6P9DQE?si=pSH8x_QtRlMRdkOH"
-      title="YouTube video player"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      referrerpolicy="strict-origin-when-cross-origin"
-      allowfullscreen
-      alt="Ancient Egypt History Lesson"
-    ></iframe>
+    <nav>
+      <a href="./index.html">
+        <div class="logo">
+          <img src="./assets/image.png" alt="Athena app logo" />
+        </div>
+      </a>
+      <div class="title">Athena</div>
+      <div class="buttons">
+        <a href="./login.html">
+          <button>Login</button>
+        </a>
+      </div>
+    </nav>
+    <main>
+      <div class="quiz-content">
+        <h2 class="quiz-title">Title</h2>
+        <iframe
+          id="frame"
+          width="1000"
+          height="500"
+          src="https://www.youtube.com/embed/quIjo6P9DQE?si=pSH8x_QtRlMRdkOH"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+          alt="Ancient Egypt History Lesson"
+        ></iframe>
+        <p class="quiz-description">Description</p>
+        <button class="quiz-start">Ready? Start the quiz</button>
+        <section class="questions">
+          <!-- <div class="question">
+            <p>Question</p>
+            <ol class="options">
+              <li>Option 1</li>
+              <li>Option 2</li>
+              <li>Option 3</li>
+              <li>Option 4</li>
+            </ol>
+          </div>
+          <div class="question">
+            <p>Question</p>
+            <ol class="options">
+              <li>Option 1</li>
+              <li>Option 2</li>
+              <li>Option 3</li>
+              <li>Option 4</li>
+            </ol>
+          </div> -->
+          <!-- <div class="score-sheet">
+            <p>Score: 10</p>
+          </div> -->
+        </section>
+      </div>
+    </main>
+    <footer>
+      <p>&copy;The Athena Project 2025</p>
+    </footer>
   </body>
 </html>
