@@ -33,11 +33,7 @@ async function register(e) {
     const dashboardResponse = await fetch('http://localhost:3000/dashboard', {
       method: 'GET',
       headers: headersList,
-      // method: 'DELETE',
-      // headers: headerslist,
     });
-
-    // localStorage.clear()
 
     const dashboardResponseData = await dashboardResponse.json();
     console.log(dashboardResponseData);
