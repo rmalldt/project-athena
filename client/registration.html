@@ -1,35 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./index.css">
-    <script src="./register.js" defer></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/index.css" />
+    <link rel="stylesheet" href="./assets/registration.css" />
+    <script src="./js/register.js" defer></script>
     <title>Project Athena</title>
-</head>
-<body>
+  </head>
+  <body>
     <nav>
-        <a href="">Home</a>
-		<a href="">About Us</a>
+      <a href="./index.html">
+        <div class="logo">
+          <img src="./assets/image.png" alt="Athena app logo" />
+        </div>
+      </a>
+      <div class="title">Athena</div>
+      <div class="buttons">
+        <a href="./login.html">
+          <button>Login</button>
+        </a>
+      </div>
     </nav>
-    <section class="d-flex-column">
-        <p> Registeration Page</p>
+    <main>
+      <div class="registration-content">
         <form id="registration">
-            <div class = "container-input">
-                <input id="name" type="text" name="name" placeholder="Username" required>
-            </div>
-            <div class = "container-input">
-                <input id="email" type="text" name="email" placeholder="Email" required>
-            </div>
-            <div class = "container-input">
-                <input id="password" type="password" name="password" placeholder="Password" required>
-            </div>
-            <br>
-            <!-- <button class="login">Log In</button> -->
-            <button class="register">Register</button><br>
-            <!-- <button class="forgotPassword">Forgot Password?</button> -->
+          <div class="form-control">
+            <label>Username</label>
+            <input id="name" type="text" name="name" required />
+          </div>
+          <div class="form-control">
+            <label>Email</label>
+            <input id="email" type="text" name="email" required />
+          </div>
+          <div class="form-control">
+            <label>Password</label>
+            <input id="password" type="password" name="password" required />
+          </div>
+          <button class="register">Signup</button>
         </form>
-    </section>
-    
-</body>
+      </div>
+    </main>
+    <footer>
+      <p>&copy;The Athena Project 2025</p>
+    </footer>
+  </body>
 </html>
