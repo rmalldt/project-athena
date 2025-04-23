@@ -1,5 +1,4 @@
-FYI: https://github.com/getfutureproof/fp_guides_wiki/wiki/Writing-READMEs
-
+<!-- FYI: https://github.com/getfutureproof/fp_guides_wiki/wiki/Writing-READMEs -->
 
 # Project Athena
 [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/Naereen/StrapDown.js/blob/master/LICENSE)
@@ -52,13 +51,22 @@ API documentation
 
 
 ## Future Features
-- Insert images of future features
+Teacher/Parent Dashboard
+![Teacher/Parent Dashboard](/client/assets/Presentation%20Assets/Future%20Features/Teacher_Parents%20Dashboard.jpg)
 
-- Text Adventure Game
+Text Adventure Game
+![Text Adventure Game](/client/assets/Presentation%20Assets/Future%20Features/Game%20(Text%20Adventure).jpg)
+
+
 - Wikipedia Game
 - Connecting to Geography non-STEM subject
 - Further Classes
-- Teacher/Parent Dashboard
+
+- Accessablity
+
+Colour blindness features
+
+![Colour Blind Pages](/client/assets/Presentation%20Assets/Future%20Features/Color%20Blind%20Accessibility%20Check%20(Log%20in%20Page).png)
 
 
 
