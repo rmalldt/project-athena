@@ -61,7 +61,7 @@ class User {
     const { username, email, password } = data;
 
     const response = await db.query(
-      'INSERT INTO student (username, email, password) VALUES ($1, $2, $3) RETURNING student_id, username, email, password, created_at;',
+      'INSERT INTO student (username, email, password) VALUES ($1, $2, $3) RETURNING student_id, username;',
       [username, email, password]
     );
 
