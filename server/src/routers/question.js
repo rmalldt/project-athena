@@ -12,9 +12,7 @@ router.get('/', questionController.getAll);
 router.get('/:id', questionController.getById);
 
 // Create new question (any authenticated user)
-router.post(
-  '/',
-  authenticateJWT,
+router.post('/', authenticateJWT,
   [
     body('topicId',  'topicId required').isInt(),
     body('question', 'question required').notEmpty(),
@@ -25,18 +23,11 @@ router.post(
 );
 
 // Student submits an answer attempt
-router.post(
-  '/:id/attempt',
-  authenticateJWT,
-  [ body('answer','answer required').notEmpty() ],
-  questionController.attempt
+router.post('/:id/attempt',authenticateJWT, [body('answer','answer required').notEmpty() ], questionController.attempt
 );
 
 // Student reveals the correct answer
-router.get(
-  '/:id/reveal',
-  authenticateJWT,
-  questionController.reveal
+router.get('/:id/reveal', authenticateJWT, questionController.reveal
 );
 
 module.exports = router;
