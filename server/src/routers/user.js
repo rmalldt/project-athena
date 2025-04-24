@@ -1,7 +1,6 @@
 const { Router } = require('express');
 const { body } = require('express-validator');
-const authenticateJWT = require('../middlewares/auth');
-const { ensureSelfOrTeacher } = require('../middlewares/authorize');
+const authenticateJWT = require('../middlewares/authenticator');
 const userController = require('../controllers/user');
 const userRouter = Router();
 
@@ -39,7 +38,7 @@ userRouter.post('/login',
 );
 
 // Logout
-userRouter.delete('/logout', userController.logout);
+userRouter.delete('/logout', authenticateJWT, userController.logout);
 
 
 // Update profile
