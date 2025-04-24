@@ -1,7 +1,6 @@
 const logoutButton = document.querySelector('#logout');
 
 async function getTopics(e) {
-  console.log('hit2');
 
   try {
     const response = await fetch('http://localhost:3000/topics');
@@ -9,6 +8,7 @@ async function getTopics(e) {
     const topicsData = topics.data;
 
     console.log(topicsData);
+    console.log(localStorage)
     const gridItems = document.querySelectorAll('.classes > div');
 
     for (let i = 0; i < topicsData.length; i++) {
@@ -19,6 +19,30 @@ async function getTopics(e) {
     console.error('Failed to fetch topics:', error);
   }
 }
+
+
+async function getStudentInfo(e) {
+    console.log('hit3');
+  
+    try {
+      const response = await fetch('http://localhost:3000/users');
+      const topics = await response.json();
+      const topicsData = topics.data;
+    } catch (error) {
+     console.error('Failed to fetch Student Information:', error);
+    }
+}
+//       console.log(topicsData);
+//       const gridItems = document.querySelectorAll('.classes > div');
+  
+//       for (let i = 0; i < topicsData.length; i++) {
+//         gridItems[i].childNodes[1].textContent = topicsData[i].title;
+//         gridItems[i].childNodes[5].textContent = topicsData[i].description;
+//       }
+//     } catch (error) {
+//       console.error('Failed to fetch topics:', error);
+//     }
+//   }
 
 document.addEventListener('DOMContentLoaded', async () => {
   const token = localStorage.getItem('token');
