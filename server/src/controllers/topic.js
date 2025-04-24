@@ -1,7 +1,6 @@
-const { validationResult } =  require('express-validator');
 const Topic = require('../models/Topic');
 
-
+// Return one topic or 404
 async function getById(req, res, next) {
   const topicId = Number(req.params.id);
 
@@ -16,7 +15,7 @@ async function getById(req, res, next) {
   }
 }
 
-
+// Return list of all topics
 async function getAll(req, res, next) {
   try {
     const list = await Topic.getAll();
@@ -26,43 +25,4 @@ async function getAll(req, res, next) {
   }
 }
 
-
-async function create(req, res, next) {  
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(422).json({ error: errors.array().map(error => error.msg) });
-  }
-
-  const { title, description, videoUrl } = req.body;
-  
-  try {
-    const topic = await Topic.create({ title, description, videoUrl });
-    res.status(201).json({ success: true, data: topic });
-  } catch (err) {
-    next(err);
-  }
-}
-
-
-async function searchByTitle(req, res, next) {
-  const searchTerm = req.query.title || '';
-  try {
-    const list = await Topic.getByTitle(searchTerm);
-    res.json({ success: true, data: list });
-  } catch (err) {
-    next(err);
-  }
-}
-
-
-async function searchByDescription(req, res, next) {
-  const searchTerm = req.query.description || '';
-  try {
-    const list = await Topic.getByDescription(searchTerm);
-    res.json({ success: true, data: list });
-  } catch (err) {
-    next(err);
-  }
-}
-
-module.exports = { getById, getAll, create, searchByTitle, searchByDescription };
+module.exports = { getById, getAll };

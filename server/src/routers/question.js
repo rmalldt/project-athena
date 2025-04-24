@@ -23,7 +23,7 @@ router.post('/', authenticateJWT,
 );
 
 // Student submits an answer attempt
-router.post('/:id/attempt',authenticateJWT, [body('answer','answer required').notEmpty() ], questionController.attempt
+router.post('/:id/attempt', authenticateJWT, [body('answer','answer required').notEmpty() ], questionController.attempt
 );
 
 // Student reveals the correct answer
