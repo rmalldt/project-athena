@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { body } = require('express-validator');
-const authenticateJWT = require('../middlewares/auth');
-const { ensureSelfOrTeacher } = require('../middlewares/authorize');
+const authenticateJWT = require('../middlewares/authenticator');
+const { ensureSelfOrTeacher } = require('../middlewares/authenticator');
 const userController = require('../controllers/user');
 const userRouter = Router();
 
