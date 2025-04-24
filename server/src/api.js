@@ -13,7 +13,6 @@ api.use(cors());
 api.use(express.json());
 api.use(logRouter);
 
-
 api.get('/', (req, res) => {
   res.json({
     name: 'Athena - Educational App',
@@ -28,7 +27,7 @@ api.use('/scores', scoreRouter);
 api.use('/questions', questionRouter);
 
 api.use((req, res) => {
-  res.status(404).json({ error: 'Not Found'});
+  res.status(404).json({ error: 'Not Found' });
 });
 
 api.use((err, req, res, next) => {
