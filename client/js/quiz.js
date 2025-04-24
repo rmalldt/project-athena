@@ -1,46 +1,59 @@
-const testQuestions = [
-  {
-    question: 'What is the answer of this question 1?',
-    options: 'A,B,C,D',
-    answer: 'A',
-  },
-  {
-    question: 'What is the answer of this question 2?',
-    options: 'A,B,C,D',
-    answer: 'B',
-  },
-  {
-    question: 'What is the answer of this question 3?',
-    options: 'A,B,C,D',
-    answer: 'C',
-  },
-  {
-    question: 'What is the answer of this question 4?',
-    options: 'A,B,C,D',
-    answer: 'D',
-  },
-  {
-    question: 'What is the answer of this question 5?',
-    options: 'A,B,C,D',
-    answer: 'A',
-  },
-];
-
+const quizTopic = document.querySelector('.quiz-title');
+const quizDescription = document.querySelector('.quiz-description');
+const iframeElem = document.querySelector('#frame');
+const logoutBtnElem = document.querySelector('#logout');
 const startQuizBtnElem = document.querySelector('.quiz-start');
 const allQuestionsSection = document.querySelector('.questions');
-const correctAnswers = testQuestions.map(question => question.answer);
+let testQuestions;
+let correctAnswers;
 let submitButton;
 let finishButton;
+
+async function fetchQuizData() {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    return (window.location.href = './index.html');
+  }
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const topicId = urlParams.get('id');
+
+  try {
+    const topicResponse = await fetch(
+      `http://localhost:3000/topics/${topicId}`
+    );
+    const topicData = await topicResponse.json();
+    if (topicData.success) {
+      console.log(topicData);
+      quizTopic.textContent = topicData.data.title;
+      quizDescription.textContent = topicData.data.description;
+      iframeElem.src = topicData.data.videoUrl;
+    }
+
+    const questionsResponse = await fetch(
+      `http://localhost:3000/questions/${topicId}`
+    );
+    const questionsData = await questionsResponse.json();
+    if (questionsData.success) {
+      testQuestions = questionsData.data;
+      correctAnswers = testQuestions.map(question => question.answer);
+    }
+  } catch (error) {
+    console.log('Error fetching topic questions: ', error);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', fetchQuizData);
 
 function startQuiz() {
   for (let i = 0; i < testQuestions.length; i++) {
     const questionElem = document.createElement('div');
     questionElem.classList.add('question');
 
-    questionElem.addEventListener('click', markScore);
+    questionElem.addEventListener('click', markChoice);
 
     const questionTitleElem = document.createElement('p');
-    questionTitleElem.append(testQuestions[i].question);
+    questionTitleElem.append(`${i + 1}. ` + testQuestions[i].question);
     questionElem.appendChild(questionTitleElem);
 
     const olElem = document.createElement('ol');
@@ -68,20 +81,20 @@ function startQuiz() {
   startQuizBtnElem.disabled = true;
 }
 
-function markScore(e) {
+function markChoice(e) {
   const userChoice = e.target;
-  userChoice.classList.toggle('marked');
+  if (userChoice.nodeName === 'LI') {
+    const questionElem = userChoice.closest('ol');
+    const items = questionElem.children;
 
-  const questionElem = userChoice.closest('ol');
-  const items = questionElem.children;
+    [...items].forEach(item => {
+      if (item.classList.contains('marked')) {
+        item.classList.remove('marked');
+      }
+    });
 
-  [...items].forEach(item => {
-    if (item.classList.contains('marked')) {
-      item.classList.remove('marked');
-    }
-  });
-
-  userChoice.classList.add('marked');
+    userChoice.classList.add('marked');
+  }
 }
 
 function displayResult(e) {
@@ -92,21 +105,17 @@ function displayResult(e) {
     userChoices.push(userChoice?.textContent);
   }
 
-  console.log(userChoices);
-
   for (let i = 0; i < correctAnswers.length; i++) {
     if (userChoices[i] === correctAnswers[i]) {
       score += 10;
     }
   }
 
-  console.log(score);
-
   const scoreSheet = document.createElement('div');
   scoreSheet.classList.add('score-sheet');
 
   const scoreText = document.createElement('p');
-  scoreText.append(`You Scored: ${score}`);
+  scoreText.append(`You scored: ${score}`);
   scoreText.style.fontWeight = 'bold';
   scoreSheet.appendChild(scoreText);
 
@@ -114,10 +123,9 @@ function displayResult(e) {
     const correctAnswerText = document.createElement('p');
     correctAnswerText.append(
       `Your answer: ${
-        userChoices[i] ? userChoices[i] : 'Not anwered'
+        userChoices[i] ? userChoices[i] : 'Not answered'
       } => Correct answer: ${correctAnswers[i]}`
     );
-
     scoreSheet.appendChild(correctAnswerText);
   }
 
@@ -135,3 +143,21 @@ function displayResult(e) {
 }
 
 startQuizBtnElem.addEventListener('click', startQuiz);
+
+async function logout(e) {
+  e.preventDefault();
+
+  try {
+    await fetch('http://localhost:3000/users/logout', {
+      method: 'DELETE',
+      headers: { Accept: '*/*' },
+    });
+
+    localStorage.clear();
+    window.location.href = './index.html';
+  } catch (error) {
+    console.log('Error logging out user: ', error);
+  }
+}
+
+logoutBtnElem.addEventListener('click', logout);

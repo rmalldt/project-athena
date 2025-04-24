@@ -17,12 +17,12 @@ async function getAll(req, res, next) {
 // Fetch one question by its ID
 async function getById(req, res, next) {
   try {
-    const questionId = Number(req.params.id);
-    const question = await Question.getById(questionId);
-    if (!question) {
-      return res.status(404).json({ error: 'Question not found' });
+    const topicId = Number(req.params.id);
+    const questions = await Question.getAllByTopic(topicId);
+    if (!questions) {
+      return res.status(404).json({ error: 'Questions not found' });
     }
-    res.json({ success: true, data: question });
+    res.json({ success: true, data: questions });
   } catch (err) {
     next(err);
   }

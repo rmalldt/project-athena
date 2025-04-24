@@ -10,6 +10,7 @@
 #frame {
   width: 23.75rem;
   height: 12.5rem;
+  border-radius: 5px;
 }
 
 .quiz-title {
@@ -33,7 +34,7 @@
 .question {
   width: 20rem;
   height: 16rem;
-  background-color: lightblue;
+  background-color: lightskyblue;
   border: 1px solid lightgray;
   border-radius: 5px;
   padding: 1rem;
@@ -54,7 +55,7 @@
 }
 
 .options li:hover {
-  background-color: aquamarine;
+  background-color: lightcyan;
   border-radius: 5px;
   cursor: pointer;
 }

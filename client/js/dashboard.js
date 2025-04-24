@@ -1,52 +1,86 @@
-document.addEventListener('DOMContentLoaded', () => {
-    getTopics();
-  });
-
 const logoutButton = document.querySelector('#logout');
 
-async function logout(e) {
-    console.log("hit")
-    e.preventDefault();
+async function getTopics(e) {
 
-    const headerslist = localStorage
-    
-    const dashboardResponse = await fetch('http://localhost:3000/users/logout', {
-    method: 'DELETE',
-    headers: headerslist,
+  try {
+    const response = await fetch('http://localhost:3000/topics');
+    const topics = await response.json();
+    const topicsData = topics.data;
+
+    console.log(topicsData);
+    console.log(localStorage)
+    const gridItems = document.querySelectorAll('.classes > div');
+
+    for (let i = 0; i < topicsData.length; i++) {
+      gridItems[i].childNodes[1].textContent = topicsData[i].title;
+      gridItems[i].childNodes[5].textContent = topicsData[i].description;
+      gridItems[i].addEventListener('click', () => {
+        window.location.href = `./quiz.html?id=${i + 1}`;
       });
-
-    localStorage.clear()
-    window.location.href = './index.html';
+    }
+  } catch (error) {
+    console.error('Failed to fetch topics:', error);
+  }
 }
 
-async function getTopics(e) {
-    console.log("hit2")
 
+async function getStudentInfo(e) {
+    console.log('hit3');
+  
     try {
-        const response = await fetch('http://localhost:3000/topics')
-        const topics = await response.json()
-        const topicsData = topics.data
-    
-        const gridItems = document.querySelectorAll('.classes > div');
-
-        topicsData.forEach((topic, index) => {
-            if (gridItems[index]) {
-            //   gridItems[index].name.textContent = topic.title 
-            //     <p>${topic.title}</p>
-            //     <img src="${topic.image_url}" />
-            //     <p>${topic.description}</p>
-            //     <p>Progress: ${topic.progress}%</p>
-            //   ;
-            console.log(document.querySelector(`${gridItems[index]} .name`))
-            console.log(gridItems[index].name)
-            }
-        })
-
+      const response = await fetch('http://localhost:3000/users');
+      const topics = await response.json();
+      const topicsData = topics.data;
     } catch (error) {
-        console.error('Failed to fetch topics:', error);
-
+     console.error('Failed to fetch Student Information:', error);
     }
+}
+//       console.log(topicsData);
+//       const gridItems = document.querySelectorAll('.classes > div');
+  
+//       for (let i = 0; i < topicsData.length; i++) {
+//         gridItems[i].childNodes[1].textContent = topicsData[i].title;
+//         gridItems[i].childNodes[5].textContent = topicsData[i].description;
+//       }
+//     } catch (error) {
+//       console.error('Failed to fetch topics:', error);
+//     }
+//   }
 
+document.addEventListener('DOMContentLoaded', () => {
+
+  if (localStorage) {
+    document.getElementById('student_id').textContent = localStorage.user_id;
+    document.getElementById('student_name').textContent = localStorage.user;
+    document.getElementById('email').textContent = localStorage.email;
+  }
+});
+
+
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    window.location.href = './index.html';
+  }
+
+  await getTopics();
+});
+
+async function logout(e) {
+  e.preventDefault();
+
+  try {
+    await fetch('http://localhost:3000/users/logout', {
+      method: 'DELETE',
+      headers: { Accept: '*/*' },
+    });
+
+    localStorage.clear();
+    window.location.href = './index.html';
+  } catch (error) {
+    console.error('Failed to logout:', error);
+  }
 }
 
 logoutButton.addEventListener('click', logout);

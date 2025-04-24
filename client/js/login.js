@@ -34,8 +34,10 @@ async function login(e) {
       method: 'GET',
       headers: headersList,
     });
-
     const dashboardResponseData = await dashboardResponse.json();
+    localStorage.setItem('user', dashboardResponseData.data.username);
+    localStorage.setItem('email', dashboardResponseData.data.email);
+    localStorage.setItem('user_id', dashboardResponseData.data.student_id)
     console.log(dashboardResponseData);
     window.location.href = './dashboard.html';
   }
