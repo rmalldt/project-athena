@@ -1,6 +1,8 @@
 const express = require('express');
 const { body } = require('express-validator');
 const scoreController = require('../controllers/score');
+const authenticateJWT = require('../middlewares/authenticator');
+
 const router = express.Router();
 
 router.get('/user/:userId', authenticateJWT, scoreController.getAllByUser); // Get all scores for a specific user
