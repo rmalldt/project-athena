@@ -1,19 +1,19 @@
 const db = require('../db/connect');
 
 class Question {
-  constructor({ question_id, topic_id, question, answer, option }) {
+  constructor({ question_id, topic_id, question, answer, options }) {
     this.questionId = question_id;
     this.topicId = topic_id;
     this.question = question;
     this.answer = answer;
-    this.option = option;
+    this.options = options;
   }
 
 
   // Read a question by primary key 
   static async getById(questionId) {
     const response = await db.query(
-      `SELECT question_id, topic_id, question, answer, option FROM question WHERE question_id = $1;`,
+      `SELECT question_id, topic_id, question, answer, options FROM question WHERE question_id = $1;`,
       [questionId]
     );
     if (response.rows.length === 0) return null;
@@ -24,7 +24,7 @@ class Question {
   // Read all questions 
   static async getAll() {
     const response = await db.query(
-      `SELECT question_id, topic_id, question, answer, option FROM question ORDER BY question_id;`
+      `SELECT question_id, topic_id, question, answer, options FROM question ORDER BY question_id;`
     );
     return response.rows.map(r => new Question(r));
   }
@@ -32,17 +32,17 @@ class Question {
   // Read all questions for a given topic 
   static async getAllByTopic(topicId) {
     const response = await db.query(
-      `SELECT question_id, topic_id, question, answer, option FROM question WHERE topic_id = $1 ORDER BY question_id;`,
+      `SELECT question_id, topic_id, question, answer, options FROM question WHERE topic_id = $1 ORDER BY question_id;`,
       [topicId]
     );
     return response.rows.map(r => new Question(r));
   }
 
   // Create a new question 
-  static async create({ topicId, question, answer, option }) {
+  static async create({ topicId, question, answer, options }) {
     const response = await db.query(
-      `INSERT INTO question (topic_id, question, answer, option) VALUES ($1, $2, $3, $4) RETURNING question_id, topic_id, question, answer, option;`,
-      [topicId, question, answer, option]
+      `INSERT INTO question (topic_id, question, answer, options) VALUES ($1, $2, $3, $4) RETURNING question_id, topic_id, question, answer, options;`,
+      [topicId, question, answer, options]
     );
     if (response.rows.length !== 1) return null;
     return new Question(response.rows[0]);

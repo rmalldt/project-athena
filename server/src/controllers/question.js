@@ -33,9 +33,9 @@ async function create(req, res, next) {
     return res.status(422).json({ error: errors.array().map(error => error.msg) });
   }
 
-  const { topicId, question, answer, option } = req.body;
+  const { topicId, question, answer, options } = req.body;
   try {
-    const q = await Question.create({ topicId, question, answer, option });
+    const q = await Question.create({ topicId, question, answer, options });
     res.status(201).json({ success: true, data: q });
   } catch (err) {
     next(err);
