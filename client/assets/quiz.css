@@ -34,7 +34,7 @@
 .question {
   width: 20rem;
   height: 16rem;
-  background-color: lightskyblue;
+  background-color: lightyellow;
   border: 1px solid lightgray;
   border-radius: 5px;
   padding: 1rem;
@@ -55,9 +55,13 @@
 }
 
 .options li:hover {
-  background-color: lightcyan;
+  background-color: lightblue;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.options li:active {
+  background-color: rgba(153, 214, 251, 0.8);
 }
 
 .submit-btn {
@@ -68,7 +72,7 @@
   margin: 2rem;
 }
 .marked {
-  background-color: aquamarine;
+  background-color: lightgrey;
   border-radius: 5px;
 }
 
