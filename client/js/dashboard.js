@@ -45,13 +45,11 @@ async function getStudentInfo(e) {
 //   }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const userData = localStorage
-  console.log(userData);
 
-  if (userData) {
-    document.getElementById('student_id').textContent = userData.user_id;
-    document.getElementById('student_name').textContent = userData.user;
-    document.getElementById('email').textContent = userData.email;
+  if (localStorage) {
+    document.getElementById('student_id').textContent = localStorage.user_id;
+    document.getElementById('student_name').textContent = localStorage.user;
+    document.getElementById('email').textContent = localStorage.email;
   }
 });
 
