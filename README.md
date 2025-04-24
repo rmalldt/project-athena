@@ -14,7 +14,7 @@ The Athena Project is an education app where you can use it to make your history
 
 
 ### Installation
-- 
+- Clone or download the repo
 - 
 
 ### Usage:
@@ -27,10 +27,13 @@ The Athena Project is an education app where you can use it to make your history
 
 | Application | Usage |
 | ----------- | ----------- |
+| Languages | JavaScript, HTML, CSS |
+| Node, Express, JSWT, Jest| |
 | Figma | Website design |
+| Supabase| |
+| PostgresSQL| |
 | Lucid Chart | Stakeholder Assessment, Risk  Assessment, ERD |
-| JavaScript | |
-| HTML/CSS | |
+| Trello | Task management |
 
 
 ## Process
@@ -57,7 +60,10 @@ The Athena Project is an education app where you can use it to make your history
 ## Wins & Challenges
 
 ### Wins
-- 
+- Agreeing on a ways of working for the team before starting on building the application
+- Assignment of tasks are confirmed during our stand-downs to ensure clarity amongst the team, in addition, allowing for flexibility of support where possible to reassign
+- No clashes/conflicts when pushing and merging into development
+- Great collaboration within the team which mean little to no conflict and bugs were addressed right away
 
 
 ### Challenges
@@ -66,7 +72,7 @@ The Athena Project is an education app where you can use it to make your history
 - Designing the Frontend without the use of Bootstrap
 - Storing information in localStorage
 - Setting up the relationship between the topics and quiz table
-
+- Display information from the database to the correct place on the webpage
 
 
 ### Bugs
@@ -77,21 +83,20 @@ The Athena Project is an education app where you can use it to make your history
 
 ### Additional Pages
 
-Teacher/Parent Dashboard
+- Teacher/Parent Dashboard
 ![Teacher/Parent Dashboard](/client/assets/Presentation%20Assets/Future%20Features/Teacher_Parents%20Dashboard.jpg "Teacher/Parent dashboard")
 
-Text Adventure Game
+- Text Adventure Game
 ![Text Adventure Game](/client/assets/Presentation%20Assets/Future%20Features/Game%20(Text%20Adventure).jpg "Text adventure game preview")
 
-
-Wikipedia Game
+- Wikipedia Game
 ![Wikipedia Game](/client/assets/Presentation%20Assets/Future%20Features/Wiki%20Game%20Page.jpg "Wikipedia Game page preview")
 
-Connecting to Geography non-STEM subject
-
-
-Further Classes/Quizzes
+- Further Classes/Quizzes
 ![Topic's Page](/client/assets/Presentation%20Assets/Future%20Features/Topic's%20Page.JPG "Topic's page with more quizzes")
+
+- Connecting to Geography non-STEM subject
+
 
 ### Accessibility Features
 
@@ -105,6 +110,7 @@ Colour blindness features
 ![Colour Blind Pages](/client/assets/Presentation%20Assets/Future%20Features/Color%20Blind%20Accessibility%20Check%20(Log%20in%20Page).png "Log in page that are colour blind friendly")
 
 Dark mode
+For light sensitivity
 
 ![Light/Dark Mode Log in Page preview](/client/assets/Presentation%20Assets/Future%20Features/Light_Dark%20Mode%20Comparison.png "Light and Dark mode comparison for the log in page")
 
