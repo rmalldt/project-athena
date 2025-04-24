@@ -34,11 +34,21 @@ const correctAnswers = testQuestions.map(question => question.answer);
 let submitButton;
 let finishButton;
 
-function fetchQuizData() {
+async function fetchQuizData() {
   const token = localStorage.getItem('token');
   if (!token) {
     return (window.location.href = './index.html');
   }
+
+  const urlParams = new URLSearchParams(window.location.search);
+  console.log('URLPARAMS: ', urlParams.get('id'));
+
+  // try {
+  //   const topicResponse = await fetch('http://localhost:3000/topics');
+
+  //   const topicData = await topicResponse.json();
+  //   console.log(topicData);
+  // } catch (error) {}
 
   iframeElem.src =
     'https://www.youtube.com/embed/uvy-Dy3D8Fc?si=0U8W0sdyoZFdBEWB';
