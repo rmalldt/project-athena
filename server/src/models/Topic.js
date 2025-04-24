@@ -1,39 +1,34 @@
 const db = require('../db/connect');
 
 class Topic {
-  constructor({ topic_id, student_id, video_url }) {
-    this.topicId   = topic_id;
-    this.studentId = student_id;
-    this.videoUrl  = video_url;
+  constructor({ topic_id, title, description, video_url }) {
+    this.topicId = topic_id;
+    this.title = title;
+    this.description = description;
+    this.videoUrl = video_url;
   }
 
-  
+  // Fetch a topic by its primary key
   static async getById(topicId) {
-    const { rows } = await db.query(
-      `SELECT topic_id, student_id, video_url FROM topic WHERE topic_id = $1;`,
+    const response = await db.query(
+      `SELECT topic_id, title, description, video_url FROM topic WHERE topic_id = $1;`,
       [topicId]
     );
 
-    if (rows.length === 0) return null;
-    return new Topic(rows[0]);
-  }
-  
-  static async getAllByStudent(studentId) {
-    const { rows } = await db.query(
-      `SELECT topic_id, student_id, video_url FROM topic WHERE student_id = $1 ORDER BY topic_id;`,
-      [studentId]
-    );
-    return rows.map(row => new Topic(row));
+    if (response.rows.length === 0) return null;
+    return new Topic(response.rows[0]);
   }
 
-  
-  static async create({ studentId, videoUrl }) {
-    const { rows } = await db.query(
-      `INSERT INTO topic (student_id, video_url) VALUES ($1, $2) RETURNING topic_id, student_id, video_url;`,
-      [studentId, videoUrl]
+  // Fetch all topics,sorted by ID
+  static async getAll() {
+    const response = await db.query(
+      `SELECT topic_id, title, description, video_url FROM topic ORDER BY topic_id;`
     );
-    return new Topic(rows[0]);
+
+    return response.rows.map(r => new Topic(r));
   }
+  
 }
 
 module.exports = Topic;
+

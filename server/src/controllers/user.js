@@ -105,8 +105,50 @@ async function logout(req, res) {
   res.status(200).json({ success: true, message: 'Logout Success' });
 }
 
-module.exports = {
-  register,
-  login,
-  logout,
-};
+async function updateProfile(req, res) {
+  const id = Number(req.params.id);
+  const { username, email, password } = req.body;
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ error: errors.array().map(error => error.msg) });
+  }
+
+  try {    
+    let hashed;
+    if (password) {
+      const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS));
+      hashed = await bcrypt.hash(password, salt);
+    }
+
+    const result = await User.update(id, {
+      username,
+      email,
+      password: hashed 
+    });
+
+    if (!result.data) {
+      return res.status(404).json({ error: result.message });
+    }
+
+    res.json({ success: true, data: result.data });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+async function removeUser(req, res) {
+  const id = Number(req.params.id);
+
+  try {
+    const result = await User.delete(id);
+    if (!result.data) {
+      return res.status(404).json({ error: result.message });
+    }
+    res.json({ success: true, data: result.data });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+module.exports = { register, login, logout, updateProfile, removeUser };
