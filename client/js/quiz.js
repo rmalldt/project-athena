@@ -26,21 +26,38 @@ const testQuestions = [
   },
 ];
 
+const iframeElem = document.querySelector('#frame');
+const logoutBtnElem = document.querySelector('#logout');
 const startQuizBtnElem = document.querySelector('.quiz-start');
 const allQuestionsSection = document.querySelector('.questions');
 const correctAnswers = testQuestions.map(question => question.answer);
 let submitButton;
 let finishButton;
 
+function fetchQuizData() {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    return (window.location.href = './index.html');
+  }
+
+  iframeElem.src =
+    'https://www.youtube.com/embed/uvy-Dy3D8Fc?si=0U8W0sdyoZFdBEWB';
+
+  // Make fetch request to get Topic data
+  // Make fetch request to get Question data
+}
+
+document.addEventListener('DOMContentLoaded', fetchQuizData);
+
 function startQuiz() {
   for (let i = 0; i < testQuestions.length; i++) {
     const questionElem = document.createElement('div');
     questionElem.classList.add('question');
 
-    questionElem.addEventListener('click', markScore);
+    questionElem.addEventListener('click', markChoice);
 
     const questionTitleElem = document.createElement('p');
-    questionTitleElem.append(testQuestions[i].question);
+    questionTitleElem.append(`${i + 1}. ` + testQuestions[i].question);
     questionElem.appendChild(questionTitleElem);
 
     const olElem = document.createElement('ol');
@@ -68,20 +85,20 @@ function startQuiz() {
   startQuizBtnElem.disabled = true;
 }
 
-function markScore(e) {
+function markChoice(e) {
   const userChoice = e.target;
-  userChoice.classList.toggle('marked');
+  if (userChoice.nodeName === 'LI') {
+    const questionElem = userChoice.closest('ol');
+    const items = questionElem.children;
 
-  const questionElem = userChoice.closest('ol');
-  const items = questionElem.children;
+    [...items].forEach(item => {
+      if (item.classList.contains('marked')) {
+        item.classList.remove('marked');
+      }
+    });
 
-  [...items].forEach(item => {
-    if (item.classList.contains('marked')) {
-      item.classList.remove('marked');
-    }
-  });
-
-  userChoice.classList.add('marked');
+    userChoice.classList.add('marked');
+  }
 }
 
 function displayResult(e) {
@@ -92,21 +109,17 @@ function displayResult(e) {
     userChoices.push(userChoice?.textContent);
   }
 
-  console.log(userChoices);
-
   for (let i = 0; i < correctAnswers.length; i++) {
     if (userChoices[i] === correctAnswers[i]) {
       score += 10;
     }
   }
 
-  console.log(score);
-
   const scoreSheet = document.createElement('div');
   scoreSheet.classList.add('score-sheet');
 
   const scoreText = document.createElement('p');
-  scoreText.append(`You Scored: ${score}`);
+  scoreText.append(`You scored: ${score}`);
   scoreText.style.fontWeight = 'bold';
   scoreSheet.appendChild(scoreText);
 
@@ -114,10 +127,9 @@ function displayResult(e) {
     const correctAnswerText = document.createElement('p');
     correctAnswerText.append(
       `Your answer: ${
-        userChoices[i] ? userChoices[i] : 'Not anwered'
+        userChoices[i] ? userChoices[i] : 'Not answered'
       } => Correct answer: ${correctAnswers[i]}`
     );
-
     scoreSheet.appendChild(correctAnswerText);
   }
 
@@ -135,3 +147,16 @@ function displayResult(e) {
 }
 
 startQuizBtnElem.addEventListener('click', startQuiz);
+
+async function logout(e) {
+  e.preventDefault();
+  const dashboardResponse = await fetch('http://localhost:3000/users/logout', {
+    method: 'DELETE',
+    headers: { Accept: '*/*' },
+  });
+
+  localStorage.clear();
+  window.location.href = './index.html';
+}
+
+logoutBtnElem.addEventListener('click', logout);
