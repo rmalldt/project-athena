@@ -1,7 +1,9 @@
-const { validationResult } = require('express-validator');
 const Question = require('../models/Question');
 const Score = require('../models/Score');
 
+
+
+// List every question
 async function getAll(req, res, next) {
   try {
     const list = await Question.getAll();
@@ -11,7 +13,9 @@ async function getAll(req, res, next) {
   }
 }
 
-async function getByTopicId(req, res, next) {
+
+// Fetch one question by its ID
+async function getById(req, res, next) {
   try {
     const topicId = Number(req.params.id);
     const questions = await Question.getAllByTopic(topicId);
@@ -22,65 +26,21 @@ async function getByTopicId(req, res, next) {
   } catch (err) {
     next(err);
   }
+
 }
 
-async function create(req, res, next) {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res
-      .status(422)
-      .json({ error: errors.array().map(error => error.msg) });
-  }
-
-  const { topicId, question, answer, options } = req.body;
+// Fetch all questions for a given topic
+async function getAllByTopic(req, res, next) {
   try {
-    const q = await Question.create({ topicId, question, answer, options });
-    res.status(201).json({ success: true, data: q });
-  } catch (err) {
-    next(err);
-  }
-}
-
-async function attempt(req, res, next) {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res
-      .status(422)
-      .json({ error: errors.array().map(error => error.msg) });
-  }
-
-  try {
-    const questionId = Number(req.params.id);
-    const { answer: guess } = req.body;
-
-    const correct = await Question.checkAnswer(questionId, guess);
-
-    if (correct) {
-      const question = await Question.getById(questionId);
-      await Score.create({
-        userId: req.user.student_id,
-        topicId: question.topicId,
-        score: 1,
-      });
+      const topicId = Number(req.params.topicId);
+      const list = await Question.getAllByTopic(topicId);
+      res.json({ success: true, data: list });
+    } catch (err) {
+      next(err);
     }
 
-    res.json({ success: true, correct });
-  } catch (err) {
-    next(err);
-  }
+
 }
 
-async function reveal(req, res, next) {
-  try {
-    const questionId = Number(req.params.id);
-    const answer = await Question.revealAnswer(questionId);
-    if (answer == null) {
-      return res.status(404).json({ error: 'Question not found' });
-    }
-    res.json({ success: true, answer });
-  } catch (err) {
-    next(err);
-  }
-}
 
-module.exports = { getAll, getByTopicId, create, attempt, reveal };
+module.exports = { getAll, getById, getAllByTopic };
