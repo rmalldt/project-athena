@@ -38,28 +38,7 @@ class Question {
     return response.rows.map(r => new Question(r));
   }
 
-  // Create a new question 
-  static async create({ topicId, question, answer, options }) {
-    const response = await db.query(
-      `INSERT INTO question (topic_id, question, answer, options) VALUES ($1, $2, $3, $4) RETURNING question_id, topic_id, question, answer, options;`,
-      [topicId, question, answer, options]
-    );
-    if (response.rows.length !== 1) return null;
-    return new Question(response.rows[0]);
-  }
-
-  //Check if a provided answer matches the stored answer  
-  static async checkAnswer(questionId, guess) {
-    const question = await Question.getById(questionId);
-    if (!question) return false;
-    return question.answer.trim().toLowerCase() === guess.trim().toLowerCase();
-  }
-
-  //Reveal the correct answer
-  static async revealAnswer(questionId) {
-    const question = await Question.getById(questionId);
-    return question ? question.answer : null;
-  }
+  
 }
 
 module.exports = Question;
