@@ -1,0 +1,95 @@
+.quiz-content {
+  width: 100%;
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#frame {
+  width: 23.75rem;
+  height: 12.5rem;
+}
+
+.quiz-title {
+  padding-bottom: 1rem;
+}
+
+.quiz-description {
+  padding: 2rem;
+}
+
+.quiz-start {
+  margin-bottom: 1rem;
+}
+
+.questions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.question {
+  width: 20rem;
+  height: 16rem;
+  background-color: lightblue;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 1rem;
+  margin: 1rem;
+  overflow-y: auto;
+}
+
+.question p {
+  font-weight: bold;
+}
+
+.options {
+  padding: 0.5rem 2rem;
+}
+
+.options li {
+  padding: 0.5rem 0.5rem;
+}
+
+.options li:hover {
+  background-color: aquamarine;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit-btn {
+  margin: 2rem;
+}
+
+.new-lesson {
+  margin: 2rem;
+}
+.marked {
+  background-color: aquamarine;
+  border-radius: 5px;
+}
+
+.score-sheet {
+  background-color: antiquewhite;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 1rem;
+}
+
+@media (min-width: 750px) {
+  #frame {
+    width: 62.5rem;
+    height: 31.25rem;
+  }
+
+  .question {
+    width: 60rem;
+    height: 16rem;
+  }
+
+  .score-sheet {
+    width: 50rem;
+  }
+}

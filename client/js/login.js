@@ -4,7 +4,7 @@ function redirectToRegistrationPage(e) {
   window.location.href = './registration.html';
 }
 
-async function register(e) {
+async function login(e) {
   e.preventDefault();
   const name = loginForm.name.value;
   const password = loginForm.password.value;
@@ -41,4 +41,4 @@ async function register(e) {
   }
 }
 
-loginForm.addEventListener('submit', register);
+loginForm.addEventListener('submit', login);
