@@ -2,7 +2,6 @@ const { validationResult } = require('express-validator');
 const Question = require('../models/Question');
 const Score = require('../models/Score');
 
-
 async function getAll(req, res, next) {
   try {
     const list = await Question.getAll();
@@ -12,25 +11,25 @@ async function getAll(req, res, next) {
   }
 }
 
-
-async function getById(req, res, next) {
+async function getByTopicId(req, res, next) {
   try {
-    const questionId = Number(req.params.id);
-    const question = await Question.getById(questionId);
-    if (!question) {
-      return res.status(404).json({ error: 'Question not found' });
+    const topicId = Number(req.params.id);
+    const questions = await Question.getAllByTopic(topicId);
+    if (!questions) {
+      return res.status(404).json({ error: 'Questions not found' });
     }
-    res.json({ success: true, data: question });
+    res.json({ success: true, data: questions });
   } catch (err) {
     next(err);
   }
 }
 
-
 async function create(req, res, next) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(422).json({ error: errors.array().map(error => error.msg) });
+    return res
+      .status(422)
+      .json({ error: errors.array().map(error => error.msg) });
   }
 
   const { topicId, question, answer, options } = req.body;
@@ -42,11 +41,12 @@ async function create(req, res, next) {
   }
 }
 
-
 async function attempt(req, res, next) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(422).json({ error: errors.array().map(error => error.msg) });
+    return res
+      .status(422)
+      .json({ error: errors.array().map(error => error.msg) });
   }
 
   try {
@@ -55,12 +55,12 @@ async function attempt(req, res, next) {
 
     const correct = await Question.checkAnswer(questionId, guess);
 
-    if (correct) {              
+    if (correct) {
       const question = await Question.getById(questionId);
       await Score.create({
         userId: req.user.student_id,
         topicId: question.topicId,
-        score: 1
+        score: 1,
       });
     }
 
@@ -70,11 +70,10 @@ async function attempt(req, res, next) {
   }
 }
 
-
 async function reveal(req, res, next) {
   try {
     const questionId = Number(req.params.id);
-    const answer     = await Question.revealAnswer(questionId);
+    const answer = await Question.revealAnswer(questionId);
     if (answer == null) {
       return res.status(404).json({ error: 'Question not found' });
     }
@@ -84,4 +83,4 @@ async function reveal(req, res, next) {
   }
 }
 
-module.exports = { getAll, getById, create, attempt, reveal };
+module.exports = { getAll, getByTopicId, create, attempt, reveal };

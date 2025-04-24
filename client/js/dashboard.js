@@ -14,6 +14,9 @@ async function getTopics(e) {
     for (let i = 0; i < topicsData.length; i++) {
       gridItems[i].childNodes[1].textContent = topicsData[i].title;
       gridItems[i].childNodes[5].textContent = topicsData[i].description;
+      gridItems[i].addEventListener('click', () => {
+        window.location.href = `./quiz.html?id=${i + 1}`;
+      });
     }
   } catch (error) {
     console.error('Failed to fetch topics:', error);

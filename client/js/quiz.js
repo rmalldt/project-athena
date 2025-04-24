@@ -1,36 +1,11 @@
-const testQuestions = [
-  {
-    question: 'What is the answer of this question 1?',
-    options: 'A,B,C,D',
-    answer: 'A',
-  },
-  {
-    question: 'What is the answer of this question 2?',
-    options: 'A,B,C,D',
-    answer: 'B',
-  },
-  {
-    question: 'What is the answer of this question 3?',
-    options: 'A,B,C,D',
-    answer: 'C',
-  },
-  {
-    question: 'What is the answer of this question 4?',
-    options: 'A,B,C,D',
-    answer: 'D',
-  },
-  {
-    question: 'What is the answer of this question 5?',
-    options: 'A,B,C,D',
-    answer: 'A',
-  },
-];
-
+const quizTopic = document.querySelector('.quiz-title');
+const quizDescription = document.querySelector('.quiz-description');
 const iframeElem = document.querySelector('#frame');
 const logoutBtnElem = document.querySelector('#logout');
 const startQuizBtnElem = document.querySelector('.quiz-start');
 const allQuestionsSection = document.querySelector('.questions');
-const correctAnswers = testQuestions.map(question => question.answer);
+let testQuestions;
+let correctAnswers;
 let submitButton;
 let finishButton;
 
@@ -41,20 +16,31 @@ async function fetchQuizData() {
   }
 
   const urlParams = new URLSearchParams(window.location.search);
-  console.log('URLPARAMS: ', urlParams.get('id'));
+  const topicId = urlParams.get('id');
 
-  // try {
-  //   const topicResponse = await fetch('http://localhost:3000/topics');
+  try {
+    const topicResponse = await fetch(
+      `http://localhost:3000/topics/${topicId}`
+    );
+    const topicData = await topicResponse.json();
+    if (topicData.success) {
+      console.log(topicData);
+      quizTopic.textContent = topicData.data.title;
+      quizDescription.textContent = topicData.data.description;
+      iframeElem.src = topicData.data.videoUrl;
+    }
 
-  //   const topicData = await topicResponse.json();
-  //   console.log(topicData);
-  // } catch (error) {}
-
-  iframeElem.src =
-    'https://www.youtube.com/embed/uvy-Dy3D8Fc?si=0U8W0sdyoZFdBEWB';
-
-  // Make fetch request to get Topic data
-  // Make fetch request to get Question data
+    const questionsResponse = await fetch(
+      `http://localhost:3000/questions/${topicId}`
+    );
+    const questionsData = await questionsResponse.json();
+    if (questionsData.success) {
+      testQuestions = questionsData.data;
+      correctAnswers = testQuestions.map(question => question.answer);
+    }
+  } catch (error) {
+    console.log('Error fetching topic questions: ', error);
+  }
 }
 
 document.addEventListener('DOMContentLoaded', fetchQuizData);
@@ -160,13 +146,18 @@ startQuizBtnElem.addEventListener('click', startQuiz);
 
 async function logout(e) {
   e.preventDefault();
-  const dashboardResponse = await fetch('http://localhost:3000/users/logout', {
-    method: 'DELETE',
-    headers: { Accept: '*/*' },
-  });
 
-  localStorage.clear();
-  window.location.href = './index.html';
+  try {
+    await fetch('http://localhost:3000/users/logout', {
+      method: 'DELETE',
+      headers: { Accept: '*/*' },
+    });
+
+    localStorage.clear();
+    window.location.href = './index.html';
+  } catch (error) {
+    console.log('Error logging out user: ', error);
+  }
 }
 
 logoutBtnElem.addEventListener('click', logout);
