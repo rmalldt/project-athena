@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const { body } = require('express-validator');
 const authenticateJWT = require('../middlewares/authenticator');
+
 const userController = require('../controllers/user');
 const userRouter = Router();
 
