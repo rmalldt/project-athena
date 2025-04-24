@@ -1,6 +1,6 @@
 const express = require('express');
 const { body } = require('express-validator');
-const authenticateJWT = require('../middlewares/auth');
+const authenticateJWT = require('../middlewares/authenticator');
 const questionController = require('../controllers/question');
 
 const router = express.Router();
@@ -23,7 +23,7 @@ router.post('/', authenticateJWT,
 );
 
 // Student submits an answer attempt
-router.post('/:id/attempt',authenticateJWT, [body('answer','answer required').notEmpty() ], questionController.attempt
+router.post('/:id/attempt', authenticateJWT, [body('answer','answer required').notEmpty() ], questionController.attempt
 );
 
 // Student reveals the correct answer
