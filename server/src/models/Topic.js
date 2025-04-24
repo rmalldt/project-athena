@@ -2,35 +2,57 @@ const db = require('../db/connect');
 
 class Topic {
   constructor({ topic_id, title, description, video_url }) {
-    this.topicId     = topic_id;
-    this.title       = title;
+    this.topicId = topic_id;
+    this.title = title;
     this.description = description;
-    this.videoUrl    = video_url;
+    this.videoUrl = video_url;
   }
 
   static async getById(topicId) {
-    const { rows } = await db.query(
+    const response = await db.query(
       `SELECT topic_id, title, description, video_url FROM topic WHERE topic_id = $1;`,
       [topicId]
     );
-    if (rows.length === 0) return null;
-    return new Topic(rows[0]);
+
+    if (response.rows.length === 0) return null;
+    return new Topic(response.rows[0]);
   }
 
   static async getAll() {
-    const { rows } = await db.query(
-      `SELECT topic_id, title, description, video_urlFROM topic ORDER BY topic_id;`
+    const response = await db.query(
+      `SELECT topic_id, title, description, video_url FROM topic ORDER BY topic_id;`
     );
-    return rows.map(r => new Topic(r));
+
+    return response.rows.map(r => new Topic(r));
+  }
+
+  static async getByTitle(substr) {
+    const response = await db.query(
+      `SELECT topic_id, title, description, video_url FROM topic WHERE title ILIKE '%' || $1 || '%' ORDER BY topic_id;`,
+      [substr]
+    );
+
+    return response.rows.map(r => new Topic(r));
+  }
+
+  static async getByDescription(substr) {
+    const response = await db.query(
+      `SELECT topic_id, title, description, video_url FROM topic WHERE description ILIKE '%' || $1 || '%' ORDER BY topic_id;`,
+      [substr]
+    );
+
+    return response.rows.map(r => new Topic(r));
   }
 
   static async create({ title, description, videoUrl }) {
-    const { rows } = await db.query(
+    const response = await db.query(
       `INSERT INTO topic (title, description, video_url) VALUES ($1, $2, $3) RETURNING topic_id, title, description, video_url;`,
       [title, description, videoUrl]
     );
-    return new Topic(rows[0]);
+
+    return new Topic(response.rows[0]);
   }
 }
 
 module.exports = Topic;
+

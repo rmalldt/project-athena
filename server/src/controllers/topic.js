@@ -1,7 +1,8 @@
-const { validationResult } =   require('express-validator');
-const Topic               =   require('../models/Topic');
+const { validationResult } =  require('express-validator');
+const Topic = require('../models/Topic');
 
-async function getById(req, res) {
+
+async function getById(req, res, next) {
   const topicId = Number(req.params.id);
 
   try {
@@ -11,40 +12,57 @@ async function getById(req, res) {
     }
     res.json({ success: true, data: topic });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 }
 
-async function getAll(req, res) {
+
+async function getAll(req, res, next) {
   try {
     const list = await Topic.getAll();
     res.json({ success: true, data: list });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 }
 
-async function create(req, res) {  
+
+async function create(req, res, next) {  
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(422).json({ error: errors.array().map(e => e.msg) });
+    return res.status(422).json({ error: errors.array().map(error => error.msg) });
   }
 
   const { title, description, videoUrl } = req.body;
-  if (!title || !videoUrl) {
-    return res.status(400).json({ error: 'title and videoUrl are required' });
-  }
-
+  
   try {
     const topic = await Topic.create({ title, description, videoUrl });
     res.status(201).json({ success: true, data: topic });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 }
 
-module.exports = {
-  getById,
-  getAll,
-  create,
-};
+
+async function searchByTitle(req, res, next) {
+  const searchTerm = req.query.title || '';
+  try {
+    const list = await Topic.getByTitle(searchTerm);
+    res.json({ success: true, data: list });
+  } catch (err) {
+    next(err);
+  }
+}
+
+
+async function searchByDescription(req, res, next) {
+  const searchTerm = req.query.description || '';
+  try {
+    const list = await Topic.getByDescription(searchTerm);
+    res.json({ success: true, data: list });
+  } catch (err) {
+    next(err);
+  }
+}
+
+module.exports = { getById, getAll, create, searchByTitle, searchByDescription };
