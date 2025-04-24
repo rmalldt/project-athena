@@ -30,8 +30,7 @@ userRouter.post(
 );
 
 // Login
-userRouter.post(
-  '/login',
+userRouter.post('/login',
   [
     body('username', 'Invalid username').trim().not().isEmpty(),
     body('password', 'Invalid password.').isLength({ min: 8 }).trim(),
@@ -45,9 +44,7 @@ userRouter.delete('/logout', userController.logout);
 
 // Update profile
 userRouter.put(
-  '/:id',
-  authenticateJWT,
-  ensureSelfOrTeacher,
+  '/:id', authenticateJWT, 
   [
     body('email').optional().isEmail().withMessage('Invalid email').normalizeEmail(),
     body('username').optional().trim().notEmpty().withMessage('Username cannot be empty'),
@@ -66,11 +63,6 @@ userRouter.put(
 );
 
 // Delete user
-userRouter.delete(
-  '/:id',
-  authenticateJWT,
-  ensureSelfOrTeacher,
-  userController.removeUser
-);
+userRouter.delete('/:id', authenticateJWT, userController.removeUser);
 
 module.exports = userRouter;
