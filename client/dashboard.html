@@ -3,9 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="./assets/image.png" />
     <link rel="stylesheet" href="./assets/index.css" />
     <link rel="stylesheet" href="./assets/dashboard.css" />
-    <title>Document</title>
+    <script src="./js/dashboard.js" defer></script>
+    <title>Athena</title>
   </head>
   <body>
     <nav>
@@ -16,73 +18,88 @@
       </a>
       <div class="title">Athena</div>
       <div class="buttons">
-        <a href="./login.html">
-          <button>Login</button>
+        <a>
+          <button id="logout">Logout</button>
         </a>
       </div>
     </nav>
     <main>
       <div class="flex-container">
-        <div class="profile">
-          <p>Profile</p>
-          <img
-            class="test"
-            src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small_2x/user-profile-icon-free-vector.jpg"
-          />
-          <div class="profileBody">
-            <p>Student ID:</p>
-            <p>Student Name:</p>
-            <p>Email Address:</p>
-            <p>Total Progress:</p>
-            <p>Total Summary:</p>
+        <div>
+          <div class="profile">
+            <p><strong>Profile</strong></p>
+            <img class="test" src="assets/profile-icon/female-student.png" />
+            <div class="profileBody">
+              <p><strong>Student ID: </strong><span id="studentId"></span></p>
+              <p>
+                <strong>Student Name: </strong><span id="studentName"></span>
+              </p>
+              <p>
+                <strong>Student Email: </strong><span id="studentEmail"></span>
+              </p>
+              <p><strong>Total Score: </strong><span id="totalScore"></span></p>
+
+              <p><strong>Total Summary: </strong></p>
+            </div>
+          </div>
+          <div class="intro">
+            <p>
+              Welcome to the Athena Project, an interative learning platform for
+              history lessons.
+            </p>
+            <br />
+            <p>
+              <strong>To get started: </strong>click on one of the topics cards
+              to the right. You'll be shown a short video about the topic,
+              followed by a multiple choice quiz. You can see your scores for
+              each lesson at the bottom of the card.
+            </p>
           </div>
         </div>
         <div class="classes">
-          <div onclick="location.href='./quiz.html';" style="cursor: pointer">
-            <p>Ancient Egypt</p>
-            <img src="./assets/Topics Icon/Ancient Egypt Icon.png" />
+          <div style="cursor: pointer">
+            <p></p>
+            <img src="./assets/topics/ancient-egypt-icon.png" />
             <p>Description:</p>
-            <p>Progress: 75%</p>
+            <p></p>
           </div>
-          <div onclick="location.href='./quiz.html';" style="cursor: pointer">
+          <div
+            onclick="location.href='./quiz.html?id=2';"
+            style="cursor: pointer"
+          >
             <p>Persian Empire</p>
-            <img src="./assets/Topics Icon/Persian Empire.png" />
+            <img src="./assets/topics/persian-empire-icon.png" />
             <p>Progress: 0%</p>
           </div>
           <div onclick="location.href='./quiz.html';" style="cursor: pointer">
             <p>Ancient China</p>
-            <img src="./assets/Topics Icon/Ancient China Icon.png" />
+            <img src="./assets/topics/ancient-china-icon.png" />
             <p>blah</p>
           </div>
           <div onclick="location.href='./quiz.html';" style="cursor: pointer">
-            <p>Bronze Age</p>
-            <img src="./assets/burger.png" />
-            <p>blah</p>
+            <p></p>
+            <img src="./assets/topics/tudor-icon.png" />
+            <p></p>
           </div>
           <div onclick="location.href='./quiz.html';" style="cursor: pointer">
-            <p>Tudors</p>
-            <img src="./assets/burger.png" />
-            <p>blah</p>
+            <p>The Vikings</p>
+            <img src="./assets/topics/vikings-icon.png" />
+            <p>A video on the Vikings legends.</p>
           </div>
           <div onclick="location.href='./quiz.html';" style="cursor: pointer">
-            <p>Vikings</p>
-            <img src="./assets/burger.png" />
-            <p>blah</p>
+            <p>The Aztec Empire</p>
+            <img src="./assets/topics/aztec-empire-icon.png" />
+            <p>A video on the story of the Aztec Empire.</p>
+          </div>
+          <div onclick="location.href='./quiz.html';" style="cursor: pointer">
+            <p>Ancient Greeks</p>
+            <img src="./assets/topics/ancient-greece-icon.png" />
+            <p>A video on the story of the ancient Greeks.</p>
           </div>
           <div onclick="location.href='./quiz.html';" style="cursor: pointer">
             <p>Ancient Rome</p>
-            <img src="./assets/burger.png" />
-            <p>blah</p>
-          </div>
-          <div onclick="location.href='./quiz.html';" style="cursor: pointer">
-            <p>Ancient Greece</p>
-            <img src="./assets/burger.png" />
-            <p>blah</p>
-          </div>
-          <div onclick="location.href='./quiz.html';" style="cursor: pointer">
-            <p>Aztec Empire</p>
-            <img src="./assets/burger.png" />
-            <p>blah</p>
+            <img src="./assets/topics/ancient-rome-icon.png" />
+            <p>A video on the story of the Ancient Rome</p>
           </div>
         </div>
       </div>

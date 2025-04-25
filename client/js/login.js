@@ -4,7 +4,7 @@ function redirectToRegistrationPage(e) {
   window.location.href = './registration.html';
 }
 
-async function register(e) {
+async function login(e) {
   e.preventDefault();
   const name = loginForm.name.value;
   const password = loginForm.password.value;
@@ -22,7 +22,6 @@ async function register(e) {
   });
 
   const responseData = await response.json();
-  console.log(responseData);
   if (responseData.success) {
     localStorage.setItem('token', responseData.data.token);
     console.log(responseData.data.token);
@@ -34,11 +33,16 @@ async function register(e) {
       method: 'GET',
       headers: headersList,
     });
-
     const dashboardResponseData = await dashboardResponse.json();
+    localStorage.setItem('user', dashboardResponseData.data.username);
+    localStorage.setItem('email', dashboardResponseData.data.email);
+    localStorage.setItem('user_id', dashboardResponseData.data.student_id)
     console.log(dashboardResponseData);
+    localStorage.setItem('student_id', dashboardResponseData.data.student_id);
+    localStorage.setItem('username', dashboardResponseData.data.username);
+    localStorage.setItem('email', dashboardResponseData.data.email);
     window.location.href = './dashboard.html';
   }
 }
 
-loginForm.addEventListener('submit', register);
+loginForm.addEventListener('submit', login);
