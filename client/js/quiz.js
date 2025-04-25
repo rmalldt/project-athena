@@ -6,6 +6,7 @@ const startQuizBtnElem = document.querySelector('.quiz-start');
 const allQuestionsSection = document.querySelector('.questions');
 let testQuestions;
 let correctAnswers;
+let topicId;
 let submitButton;
 let finishButton;
 
@@ -16,7 +17,7 @@ async function fetchQuizData() {
   }
 
   const urlParams = new URLSearchParams(window.location.search);
-  const topicId = urlParams.get('id');
+  topicId = urlParams.get('id');
 
   try {
     const topicResponse = await fetch(
@@ -97,7 +98,34 @@ function markChoice(e) {
   }
 }
 
-function displayResult(e) {
+async function updateScore(score) {
+  const studentId = localStorage.getItem('student_id');
+
+  try {
+    const response = await fetch(
+      `http://localhost:3000/scores/user/${studentId}`,
+      {
+        method: 'PATCH',
+        body: JSON.stringify({
+          score: score,
+          topicId: topicId,
+        }),
+        headers: {
+          Accept: '*/*',
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    const responseData = await response.json();
+    console.log(responseData.data);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function displayResult(e) {
   let score = 0;
   let userChoices = [];
   for (let i = 0; i < testQuestions.length; i++) {
@@ -137,6 +165,8 @@ function displayResult(e) {
   finishButton.classList.add('new-lesson');
   allQuestionsSection.appendChild(finishButton);
 
+  await updateScore(score);
+
   finishButton.addEventListener('click', e => {
     window.location.href = './dashboard.html';
   });
@@ -146,7 +176,6 @@ startQuizBtnElem.addEventListener('click', startQuiz);
 
 async function logout(e) {
   e.preventDefault();
-
   try {
     await fetch('http://localhost:3000/users/logout', {
       method: 'DELETE',

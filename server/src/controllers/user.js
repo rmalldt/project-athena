@@ -72,6 +72,7 @@ async function login(req, res) {
     const payload = {
       student_id: result.data.student_id,
       username: result.data.username,
+      email: result.data.email,
     };
     const expiresIn = 3600;
 
@@ -111,20 +112,24 @@ async function updateProfile(req, res) {
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(422).json({ error: errors.array().map(error => error.msg) });
+    return res
+      .status(422)
+      .json({ error: errors.array().map(error => error.msg) });
   }
 
-  try {    
+  try {
     let hashed;
     if (password) {
-      const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS));
+      const salt = await bcrypt.genSalt(
+        parseInt(process.env.BCRYPT_SALT_ROUNDS)
+      );
       hashed = await bcrypt.hash(password, salt);
     }
 
     const result = await User.update(id, {
       username,
       email,
-      password: hashed 
+      password: hashed,
     });
 
     if (!result.data) {

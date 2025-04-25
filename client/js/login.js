@@ -22,7 +22,6 @@ async function login(e) {
   });
 
   const responseData = await response.json();
-  console.log(responseData);
   if (responseData.success) {
     localStorage.setItem('token', responseData.data.token);
     console.log(responseData.data.token);
@@ -39,6 +38,9 @@ async function login(e) {
     localStorage.setItem('email', dashboardResponseData.data.email);
     localStorage.setItem('user_id', dashboardResponseData.data.student_id)
     console.log(dashboardResponseData);
+    localStorage.setItem('student_id', dashboardResponseData.data.student_id);
+    localStorage.setItem('username', dashboardResponseData.data.username);
+    localStorage.setItem('email', dashboardResponseData.data.email);
     window.location.href = './dashboard.html';
   }
 }
