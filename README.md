@@ -13,14 +13,9 @@ The Athena Project is an education app where you can use it to make your history
 ## Getting started
 
 
-### Installation
-- Clone or download the repo
-- 
-
-### Usage:
--
--
--
+### Installation & Usage
+- [Client Installation & Usage](/client/README.md)
+- [Server Installation & Usage](/server/README.md)
 
 
 ## Technologies
@@ -75,7 +70,7 @@ The Athena Project is an education app where you can use it to make your history
 
 
 ### Bugs
-
+- Testing bug in regards to localStorgage (doesn't affect the functionality of the application but will cause some errors during testing)
 
 
 ## Future Features
@@ -99,7 +94,7 @@ The Athena Project is an education app where you can use it to make your history
 
 ### Accessibility Features
 
-Colour blindness features
+- Colour blindness features
 
 1. Original (Normal Vision) – The design is visually rich with a dreamy, golden theme.
 2. Protanopia (Red-blind) – The yellow/orange tones become more muted, blending more with the background.
@@ -108,7 +103,7 @@ Colour blindness features
 
 ![Colour Blind Pages](/client/assets/presentation_assets/future_features/colour_blind_function.png "Log in page that are colour blind friendly")
 
-Dark mode
+- Dark mode
 For light sensitivity
 
 ![Light/Dark Mode Log in Page preview](/client/assets/presentation_assets/future_features/dark_mode_function.png "Light and Dark mode comparison for the log in page")
