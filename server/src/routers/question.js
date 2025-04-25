@@ -1,6 +1,4 @@
 const express = require('express');
-const { body } = require('express-validator');
-const authenticateJWT = require('../middlewares/authenticator');
 const questionController = require('../controllers/question');
 
 const router = express.Router();
@@ -11,6 +9,10 @@ router.get('/', questionController.getAll);
 // Get a question by ID
 router.get('/:id', questionController.getByTopicId);
 
+<<<<<<< HEAD
+// List all question for a given topic
+router.get('/topic/ :topicId', questionController.getAllByTopic)
+=======
 // Create new question (any authenticated user)
 router.post(
   '/',
@@ -34,5 +36,6 @@ router.post(
 
 // Student reveals the correct answer
 router.get('/:id/reveal', authenticateJWT, questionController.reveal);
+>>>>>>> aea5d3c4759e3529f0b0bbbbccfa95ca72caa923
 
 module.exports = router;
